@@ -1,6 +1,6 @@
 # Task Manager MCP
 
-A modern task management system built with Python, featuring a FastAPI backend and SQLAlchemy for data persistence.
+A modern task management system built with Python, featuring FastMCP and SQLAlchemy for data persistence.
 
 ## Features
 
@@ -24,6 +24,15 @@ A modern task management system built with Python, featuring a FastAPI backend a
    ```
 
 2. **Setup Development Environment:**
+   There are two ways to set up the environment:
+
+   **Using Dev Container (Recommended):**
+   1. Install Docker and VS Code with Remote Development extension
+   2. Open the project in VS Code
+   3. Click "Reopen in Container" when prompted
+   4. The container will automatically set up everything
+
+   **Manual Setup:**
    ```bash
    # Install UV package manager
    curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -32,31 +41,13 @@ A modern task management system built with Python, featuring a FastAPI backend a
    uv venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-   # Install dependencies
+   # Install dependencies from pyproject.toml
    uv pip install -e .
    ```
 
 3. **Configure the application:**
    - Copy `user_config.yaml.example` to `user_config.yaml`
    - Update the configuration as needed
-
-4. **Run the server:**
-   ```bash
-   python run_server.py
-   ```
-
-## Using the CLI
-
-The TMS comes with a command-line interface for managing tasks:
-
-```bash
-# Add a new task
-python add_task.py --title "New Task" --details "Task details" --user-id 1
-
-# Read tasks
-python read_tasks.py --all  # List all tasks
-python read_tasks.py --user-id 1  # List tasks for specific user
-```
 
 ## Docker Development
 

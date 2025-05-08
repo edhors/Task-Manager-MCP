@@ -11,24 +11,33 @@ This guide contains information for developers working on the Task Manager MCP.
 - VS Code with Remote Development extension (recommended)
 - UV package manager
 
-### Local Setup
+### Environment Setup Options
 
-1. **Clone and Setup:**
-   ```bash
-   git clone <repository-url>
-   cd tms
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   uv venv
-   source .venv/bin/activate
-   uv pip install -e .
-   ```
+#### Option 1: Using Dev Container (Recommended)
+The project includes a dev container configuration that automatically sets up your development environment:
 
-2. **IDE Configuration:**
-   - Use VS Code with the following extensions:
-     - Python
-     - Ruff (for linting/formatting)
-     - Docker
-     - Remote Development
+1. Install Docker and VS Code with Remote Development extension
+2. Open the project in VS Code
+3. Click "Reopen in Container" when prompted
+4. The container will automatically:
+   - Install UV
+   - Create a virtual environment
+   - Install all dependencies from pyproject.toml
+
+#### Option 2: Manual Setup
+If you prefer not to use containers, you can set up manually:
+
+```bash
+# Install UV package manager
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create and activate virtual environment
+uv venv
+source .venv/bin/activate
+
+# Install dependencies from pyproject.toml
+uv pip install -e .
+```
 
 ## Project Structure
 
@@ -38,7 +47,31 @@ tms/
 ├── docs/               # Documentation
 ├── src/                # Source code
 ├── tests/              # Test files
-└── pyproject.toml      # Project configuration
+├── pyproject.toml      # Project configuration and dependencies
+└── user_config.yaml    # Application configuration
+```
+
+## Dependencies
+
+Dependencies are managed through `pyproject.toml`. The project uses UV package manager for better performance and dependency resolution.
+
+### Key Dependencies
+- fastmcp - Latest stable version
+- sqlalchemy - Latest stable version
+- pyyaml - Latest stable version
+
+### Checking Installed Packages
+To verify your environment:
+```bash
+source .venv/bin/activate  # Activate virtual environment
+pip list  # List all installed packages
+```
+
+## Configuration
+
+Application configuration is handled through `user_config.yaml`. Copy the example configuration and modify as needed:
+```bash
+cp user_config.yaml.example user_config.yaml
 ```
 
 ## Code Style Guide
