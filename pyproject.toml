@@ -2,11 +2,12 @@
 name = "tms"
 version = "0.1.0"
 description = "Task Management System"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
     "fastmcp",
     "sqlalchemy",
     "pyyaml",
+    "fastapi>=0.115.13",
 ]
 
 [build-system]
