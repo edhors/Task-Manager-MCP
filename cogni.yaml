@@ -1,15 +1,15 @@
 start:
-  port: 8080
+  port: 8000
   
 # Optional future extensions:
 metadata:
-  name: "echo-server"
-  description: "Echo Test Server"
+  name: "task-manager-mcp"
+  description: "Task Management System with FastMCP and SQLAlchemy"
   
 resources:
-  cpu: "100m"
-  memory: "128Mi"
+  cpu: "200m"
+  memory: "256Mi"
   
 scaling:
   minScale: 1
-  maxScale: 10
+  maxScale: 5
