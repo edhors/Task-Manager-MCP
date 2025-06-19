@@ -1,5 +1,6 @@
 from fastmcp.server import FastMCP
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean
+from fastapi.responses import JSONResponse, HTMLResponse
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -33,6 +34,16 @@ def load_users():
 
 # Initialize FastMCP server
 server = FastMCP(title="Task Management Server", description="A server for managing team tasks")
+
+@server.custom_route("/healthz", methods=["GET"])
+async def health_check(request):
+    return JSONResponse({"status": "ok"})
+
+
+@server.custom_route("/", methods=["GET"])
+async def home_dir(request):
+    # return a simple html page with a link to the sse endpoint
+    return HTMLResponse(content="<h1>Hello , I'm working well</h1>")
 
 @server.tool()
 def create(user_id: int, title: str, details: str, expiry: str = None) -> int:
