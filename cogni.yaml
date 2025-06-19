@@ -1,0 +1,15 @@
+start:
+  port: 8080
+  
+# Optional future extensions:
+metadata:
+  name: "echo-server"
+  description: "Echo Test Server"
+  
+resources:
+  cpu: "100m"
+  memory: "128Mi"
+  
+scaling:
+  minScale: 1
+  maxScale: 10
