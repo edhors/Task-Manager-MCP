@@ -1,27 +1,33 @@
 # syntax=docker/dockerfile:1
 FROM python:3.10-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Install system dependencies including Rust toolchain
+RUN apt-get update && apt-get install -y curl build-essential && rm -rf /var/lib/apt/lists/*
+
+# Install UV using pip (more reliable than the installer script)
+RUN pip install uv
 
 # Set work directory
 WORKDIR /app
 
-# Copy project files
-COPY pyproject.toml .
+# Copy lock file and project files
+COPY uv.lock pyproject.toml ./
 COPY src/ ./src/
 
-# Install dependencies using pip
-RUN pip install -e .
+# Install dependencies using UV with lock file
+RUN uv sync --frozen
 
-# Copy the rest of the project (if needed)
+# Copy the rest of the project
 COPY . .
 
-# Expose FastAPI default port
+# Create user_config.yaml if it doesn't exist
+RUN echo 'users:\n  - user_id: 1\n    name: "Default User"' > user_config.yaml
+
+# Expose FastMCP server port
 EXPOSE 8000
 
-# Set environment variables (optional, can be overridden)
+# Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-# Default command (update the module path as needed)
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+# Run the FastMCP task server using UV
+CMD ["uv", "run", "python", "src/task_server.py"] 
