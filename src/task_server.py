@@ -1,8 +1,7 @@
 from fastmcp.server import FastMCP
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean
 from fastapi.responses import JSONResponse, HTMLResponse
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 import yaml
 import os
@@ -33,7 +32,7 @@ def load_users():
         return yaml.safe_load(f)['users']
 
 # Initialize FastMCP server
-server = FastMCP(title="Task Management Server", description="A server for managing team tasks")
+server = FastMCP()
 
 @server.custom_route("/healthz", methods=["GET"])
 async def health_check(request):
@@ -175,4 +174,4 @@ if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     
     print(f"Starting Task Management MCP Server on port {port}...")
-    server.run(transport='sse', port=8000) 
+    server.run(transport='sse', port=8000, host='0.0.0.0') 
